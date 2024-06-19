@@ -1,3 +1,5 @@
+import 'package:chat_app/widgets/custom_butotn.dart';
+import 'package:chat_app/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class SignInView extends StatelessWidget {
@@ -7,10 +9,13 @@ class SignInView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff274460),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           children: [
-            const SizedBox(height: 100),
+            Spacer(
+              flex: 1,
+            ),
             const Image(image: AssetImage('assets/images/scholar.png')),
             const Text(
               'Scholar Chat',
@@ -20,50 +25,23 @@ class SignInView extends StatelessWidget {
                   fontFamily: 'pacifico',
                   color: Colors.white),
             ),
-            const SizedBox(height: 150),
-            const Text('Sign In',
-                style: TextStyle(color: Colors.white, fontSize: 28)),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TextField(
-                decoration: InputDecoration(
-                    labelText: 'Email',
-                    labelStyle: TextStyle(color: Colors.white),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    )),
-              ),
+            Spacer(flex: 2),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text('LOGIN',
+                    style: TextStyle(color: Colors.white, fontSize: 28)),
+              ],
             ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TextField(
-                decoration: InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: TextStyle(color: Colors.white),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    )),
-              ),
+            const SizedBox(height: 10),
+            const CustomTextField(labelText: 'Email'),
+            const SizedBox(height: 10),
+            const CustomTextField(labelText: 'Password'),
+            const SizedBox(height: 25),
+            CustomButton(
+              text: "LOGIN",
             ),
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              height: 50,
-              width: MediaQuery.of(context).size.width,
-              child: ElevatedButton(
-                child: const Text(
-                  'Sign In',
-                  style: TextStyle(fontSize: 24, color: Color(0xff274460)),
-                ),
-                onPressed: () {},
-              ),
-            ),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -72,9 +50,11 @@ class SignInView extends StatelessWidget {
                 TextButton(
                     onPressed: () {},
                     child: const Text('Sign Up',
-                        style: TextStyle(fontSize: 18, color: Colors.blue)))
+                        style:
+                            TextStyle(fontSize: 18, color: Color(0xffBADEDC)))),
               ],
             ),
+            Spacer(flex: 2)
           ],
         ),
       ),
