@@ -1,51 +1,72 @@
-import 'package:chat_app/widgets/custom_butotn.dart';
+import 'package:chat_app/constants.dart';
+import 'package:chat_app/widgets/custom_buttonn.dart';
 import 'package:chat_app/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
-class SignInView extends StatelessWidget {
-  const SignInView({super.key});
+class SignUpView extends StatelessWidget {
+  const SignUpView({super.key});
+  static String id = 'SignUpView';
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xff274460),
+    return Scaffold(
+      backgroundColor: kPrimaryColor,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.0),
-        child: Column(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: ListView(
           children: [
-            Spacer(
-              flex: 1,
+            const SizedBox(
+              height: 75,
             ),
-            Image(image: AssetImage('assets/images/scholar.png')),
-            Text(
-              'Scholar Chat',
-              style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'pacifico',
-                  color: Colors.white),
+            const Image(
+              image: AssetImage('assets/images/scholar.png'),
+              height: 100,
             ),
-            Spacer(flex: 2),
-            Row(
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Scholar Chat',
+                  style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'pacifico',
+                      color: Colors.white),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 120,
+            ),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text('Sign In',
                     style: TextStyle(color: Colors.white, fontSize: 28)),
               ],
             ),
-            SizedBox(height: 10),
-            CustomTextField(labelText: 'First Name'),
-            SizedBox(height: 10),
-            CustomTextField(labelText: 'Last Name'),
-            SizedBox(height: 10),
-            CustomTextField(labelText: 'Email'),
-            SizedBox(height: 10),
-            CustomTextField(labelText: 'Password'),
-            SizedBox(height: 25),
-            CustomButton(
+            const SizedBox(height: 10),
+            const CustomTextField(labelText: 'Email'),
+            const SizedBox(height: 10),
+            const CustomTextField(labelText: 'Password'),
+            const SizedBox(height: 25),
+            const CustomButton(
               text: "Sign In",
             ),
-            Spacer(flex: 2)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Already have an account?",
+                    style: TextStyle(fontSize: 18, color: Colors.white)),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Login',
+                        style:
+                            TextStyle(fontSize: 18, color: Color(0xffBADEDC)))),
+              ],
+            ),
           ],
         ),
       ),

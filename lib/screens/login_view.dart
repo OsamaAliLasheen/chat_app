@@ -1,32 +1,39 @@
+import 'package:chat_app/constants.dart';
 import 'package:chat_app/screens/sign_in_view.dart';
-import 'package:chat_app/widgets/custom_butotn.dart';
+import 'package:chat_app/widgets/custom_buttonn.dart';
 import 'package:chat_app/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
-
+  static String id = 'LoginView';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff274460),
+      backgroundColor: kPrimaryColor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Column(
+        child: ListView(
           children: [
-            const Spacer(
-              flex: 1,
+            const SizedBox(height: 75),
+            const Image(
+                image: AssetImage('assets/images/scholar.png'), height: 100),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Scholar Chat',
+                  style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'pacifico',
+                      color: Colors.white),
+                ),
+              ],
             ),
-            const Image(image: AssetImage('assets/images/scholar.png')),
-            const Text(
-              'Scholar Chat',
-              style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'pacifico',
-                  color: Colors.white),
+            const SizedBox(
+              height: 120,
             ),
-            const Spacer(flex: 2),
             const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -50,18 +57,13 @@ class LoginView extends StatelessWidget {
                     style: TextStyle(fontSize: 18, color: Colors.white)),
                 TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SignInView()),
-                      );
+                      Navigator.pushNamed(context, SignUpView.id);
                     },
                     child: const Text('Sign Up',
                         style:
                             TextStyle(fontSize: 18, color: Color(0xffBADEDC)))),
               ],
             ),
-            const Spacer(flex: 2)
           ],
         ),
       ),
