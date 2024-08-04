@@ -1,11 +1,20 @@
+import 'package:chat_app/authentication/signup_auth.dart';
 import 'package:chat_app/constants.dart';
-import 'package:chat_app/widgets/custom_buttonn.dart';
+import 'package:chat_app/widgets/custom_button.dart';
 import 'package:chat_app/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
-class SignUpView extends StatelessWidget {
+class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
   static String id = 'SignUpView';
+
+  @override
+  State<SignUpView> createState() => _SignUpViewState();
+}
+
+class _SignUpViewState extends State<SignUpView> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +59,14 @@ class SignUpView extends StatelessWidget {
             const SizedBox(height: 10),
             const CustomTextField(labelText: 'Password'),
             const SizedBox(height: 25),
-            const CustomButton(
-              text: "Sign In",
-            ),
+            CustomButton(
+                text: "Sign In",
+                onTap: () async {
+                  await signUpAuth(
+                    emailController: emailController.text,
+                    passwordController: passwordController.text,
+                  );
+                }),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

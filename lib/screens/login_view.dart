@@ -1,6 +1,7 @@
+import 'package:chat_app/authentication/login_auth.dart';
 import 'package:chat_app/constants.dart';
 import 'package:chat_app/screens/sign_in_view.dart';
-import 'package:chat_app/widgets/custom_buttonn.dart';
+import 'package:chat_app/widgets/custom_button.dart';
 import 'package:chat_app/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,8 @@ class LoginView extends StatelessWidget {
   static String id = 'LoginView';
   @override
   Widget build(BuildContext context) {
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
     return Scaffold(
       backgroundColor: kPrimaryColor,
       body: Padding(
@@ -46,8 +49,14 @@ class LoginView extends StatelessWidget {
             const SizedBox(height: 10),
             const CustomTextField(labelText: 'Password'),
             const SizedBox(height: 25),
-            const CustomButton(
+            CustomButton(
               text: "LOGIN",
+              onTap: () async {
+                await loginAuth(
+                  emailController: emailController.text,
+                  passwordController: passwordController.text,
+                );
+              },
             ),
             const SizedBox(height: 10),
             Row(
