@@ -7,6 +7,7 @@ Future<void> signUpAuth({required String emailController, required String passwo
         email: emailController,
         password: passwordController,
       );
+      print(credential.user!.email);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
