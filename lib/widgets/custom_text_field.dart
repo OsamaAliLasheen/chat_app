@@ -7,7 +7,13 @@ class CustomTextField extends StatelessWidget {
   Function(String)? onchanged;
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Please enter some text';
+        }
+        return null;
+      },
       onChanged: onchanged,
       decoration: InputDecoration(
           labelText: labelText,
