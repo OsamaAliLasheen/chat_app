@@ -1,3 +1,4 @@
+import 'package:chat_app/screens/chat_view.dart';
 import 'package:chat_app/screens/login_view.dart';
 import 'package:chat_app/screens/signUp_view.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,8 +19,9 @@ class ScholarChat extends StatelessWidget {
       routes: {
         LoginView.id: (context) => const LoginView(),
         SignUpView.id: (context) => const SignUpView(),
+        ChatView.id: (context) => const ChatView(),
       },
-      initialRoute: 'LoginView', //default is LoginView
+      initialRoute: LoginView.id, //default is LoginView
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:chat_app/screens/chat_view.dart';
 import 'package:chat_app/widgets/show_snack_bar.dart';
 import 'package:chat_app/authentication/signup_auth.dart';
 import 'package:chat_app/constants.dart';
@@ -40,7 +41,7 @@ class _SignUpViewState extends State<SignUpView> {
                   height: 75,
                 ),
                 const Image(
-                  image: AssetImage('assets/images/scholar.png'),
+                  image: AssetImage(kLogo),
                   height: 100,
                 ),
                 const Row(
@@ -88,7 +89,7 @@ class _SignUpViewState extends State<SignUpView> {
                       setState(() {});
                       try {
                         await signUpAuth(email: email!, password: password!);
-                        showSnackBar(context, 'Account Created Successfully');
+                        Navigator.pushNamed(context, ChatView.id);
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'weak-password') {
                           showSnackBar(

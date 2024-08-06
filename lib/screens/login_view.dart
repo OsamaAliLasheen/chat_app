@@ -1,5 +1,6 @@
 import 'package:chat_app/authentication/login_auth.dart';
 import 'package:chat_app/constants.dart';
+import 'package:chat_app/screens/chat_view.dart';
 import 'package:chat_app/screens/signUp_view.dart';
 import 'package:chat_app/widgets/custom_button.dart';
 import 'package:chat_app/widgets/custom_text_field.dart';
@@ -39,7 +40,7 @@ class _LoginViewState extends State<LoginView> {
               children: [
                 const SizedBox(height: 75),
                 const Image(
-                    image: AssetImage('assets/images/scholar.png'),
+                    image: AssetImage(kLogo),
                     height: 100),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -83,10 +84,8 @@ class _LoginViewState extends State<LoginView> {
                       isLoading = true;
                       setState(() {});
                       try {
-                        await loginAuth(
-                          emailController: email!,
-                          passwordController: password!,
-                        );
+                        await loginAuth(email: email!, password: password!);
+                        Navigator.pushNamed(context, ChatView.id);
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'user-not-found') {
                           showSnackBar(
@@ -95,6 +94,8 @@ class _LoginViewState extends State<LoginView> {
                           showSnackBar(context,
                               'Wrong password provided for that user.');
                         }
+                      } catch (e) {
+                        showSnackBar(context, e.toString());
                       }
 
                       isLoading = false;
