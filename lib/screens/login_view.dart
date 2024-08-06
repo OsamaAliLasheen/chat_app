@@ -67,12 +67,14 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
+                    isObscure: false,
                     labelText: 'Email',
                     onchanged: (data) {
                       email = data;
                     }),
                 const SizedBox(height: 10),
                 CustomTextField(
+                    isObscure: true,
                     labelText: 'Password',
                     onchanged: (data) {
                       password = data;

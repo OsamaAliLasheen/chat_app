@@ -26,8 +26,33 @@ class ChatView extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: const ChatBubble(),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(itemBuilder: (context, index) {
+              return const Align(
+                  alignment: Alignment.centerLeft, child: ChatBubble());
+            }),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              decoration: InputDecoration(
+                  hintText: "Type a message",
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    borderSide: BorderSide(color: kPrimaryColor),
+                  ),
+                  suffixIcon: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.send,
+                        color: kPrimaryColor,
+                      ))),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
-

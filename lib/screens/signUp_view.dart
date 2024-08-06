@@ -69,6 +69,7 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
+                  isObscure: false,
                   labelText: 'Email',
                   onchanged: (data) {
                     email = data;
@@ -76,6 +77,7 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 const SizedBox(height: 10),
                 CustomTextField(
+                  isObscure: true,
                   labelText: 'Password',
                   onchanged: (data) {
                     password = data;
