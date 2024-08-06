@@ -16,8 +16,8 @@ class ScholarChat extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        LoginView.id: (context) => LoginView(),
-        SignUpView.id: (context) => SignUpView(),
+        LoginView.id: (context) => const LoginView(),
+        SignUpView.id: (context) => const SignUpView(),
       },
       initialRoute: 'LoginView', //default is LoginView
     );
