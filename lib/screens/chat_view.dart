@@ -13,7 +13,7 @@ class ChatView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CollectionReference messages =
-        FirebaseFirestore.instance.collection('messages');
+        FirebaseFirestore.instance.collection(kMessagesCollection);
 
     return Scaffold(
       appBar: AppBar(
@@ -45,7 +45,7 @@ class ChatView extends StatelessWidget {
             child: TextField(
               controller: messageController,
               onSubmitted: (value) {
-                messages.add({'message': value});
+                messages.add({kMessagesCollection: value});
                 messageController.clear();
               },
               decoration: InputDecoration(
