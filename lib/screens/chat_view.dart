@@ -24,7 +24,7 @@ class ChatView extends StatelessWidget {
             for (int i = 0; i < snapshot.data!.docs.length; i++) {
               messageList.add(MessageModel.fromJson(snapshot.data!.docs[i]));
             }
-            print(snapshot.data!.docs[1]['message']);
+            print(snapshot.data!.docs[1]['messages']);
             return Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
@@ -51,7 +51,7 @@ class ChatView extends StatelessWidget {
                           return Align(
                               alignment: Alignment.centerLeft,
                               child: ChatBubble(
-                                message: messageList[index].message,
+                                message: messageList[index],
                               ));
                         }),
                   ),

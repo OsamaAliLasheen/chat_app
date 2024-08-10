@@ -7,7 +7,7 @@ class ChatBubble extends StatelessWidget {
     super.key,
     this.message,
   });
-  final String? message;
+  final MessageModel? message;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +22,7 @@ class ChatBubble extends StatelessWidget {
             bottomRight: Radius.circular(32),
           )),
       child: Text(
-        message!,
+        message!.message!,
         style: const TextStyle(color: Colors.white),
       ),
     );
