@@ -15,14 +15,29 @@ class ChatView extends StatefulWidget {
 
 class _ChatViewState extends State<ChatView> {
   TextEditingController messageController = TextEditingController();
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    messageController.dispose();
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  void scrollToBottom() {
+    scrollController.animateTo(scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+  }
 
   @override
   Widget build(BuildContext context) {
     CollectionReference messages =
         FirebaseFirestore.instance.collection(kMessagesCollection);
 
-    final Stream<QuerySnapshot> messageStream =
-        FirebaseFirestore.instance.collection(kMessagesCollection).snapshots();
+    final Stream<QuerySnapshot> messageStream = FirebaseFirestore.instance
+        .collection(kMessagesCollection)
+        .orderBy(kTimestamp, descending: false)
+        .snapshots();
 
     return StreamBuilder<QuerySnapshot>(
         stream: messageStream,
@@ -32,7 +47,7 @@ class _ChatViewState extends State<ChatView> {
             for (int i = 0; i < snapshot.data!.docs.length; i++) {
               messageList.add(MessageModel.fromJson(snapshot.data!.docs[i]));
             }
-            print(snapshot.data!.docs[1]['messages']);
+
             return Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
@@ -54,6 +69,7 @@ class _ChatViewState extends State<ChatView> {
                 children: [
                   Expanded(
                     child: ListView.builder(
+                        controller: scrollController,
                         itemCount: messageList.length,
                         itemBuilder: (context, index) {
                           return Align(
@@ -68,8 +84,13 @@ class _ChatViewState extends State<ChatView> {
                     child: TextField(
                       controller: messageController,
                       onSubmitted: (value) {
-                        messages.add({kMessagesCollection: value});
+                        messages.add({
+                          kMessagesCollection: value,
+                          kTimestamp: FieldValue
+                              .serverTimestamp() // Add timestamp when submitting
+                        });
                         messageController.clear();
+                        scrollToBottom();
                       },
                       decoration: InputDecoration(
                           hintText: "Type a message",
@@ -81,9 +102,13 @@ class _ChatViewState extends State<ChatView> {
                           suffixIcon: IconButton(
                               onPressed: () {
                                 messages.add({
-                                  kMessagesCollection: messageController.text
+                                  kMessagesCollection: messageController.text,
+                                  kTimestamp: FieldValue
+                                      .serverTimestamp() // Add timestamp when sending
                                 });
+
                                 messageController.clear();
+                                scrollToBottom();
                               },
                               icon: const Icon(
                                 Icons.send,
