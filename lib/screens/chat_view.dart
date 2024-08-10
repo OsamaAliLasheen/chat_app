@@ -4,11 +4,16 @@ import 'package:chat_app/widgets/chat_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ChatView extends StatelessWidget {
-  ChatView({super.key});
+class ChatView extends StatefulWidget {
+  const ChatView({super.key});
 
   static String id = 'ChatView';
 
+  @override
+  State<ChatView> createState() => _ChatViewState();
+}
+
+class _ChatViewState extends State<ChatView> {
   TextEditingController messageController = TextEditingController();
 
   @override
@@ -16,8 +21,11 @@ class ChatView extends StatelessWidget {
     CollectionReference messages =
         FirebaseFirestore.instance.collection(kMessagesCollection);
 
-    return FutureBuilder<QuerySnapshot>(
-        future: messages.get(),
+    final Stream<QuerySnapshot> messageStream =
+        FirebaseFirestore.instance.collection(kMessagesCollection).snapshots();
+
+    return StreamBuilder<QuerySnapshot>(
+        stream: messageStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<MessageModel> messageList = [];
