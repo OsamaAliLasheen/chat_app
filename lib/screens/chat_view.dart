@@ -25,7 +25,7 @@ class _ChatViewState extends State<ChatView> {
   }
 
   void scrollToBottom() {
-    scrollController.animateTo(scrollController.position.maxScrollExtent,
+    scrollController.animateTo(0,
         duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
   }
 
@@ -34,9 +34,12 @@ class _ChatViewState extends State<ChatView> {
     CollectionReference messages =
         FirebaseFirestore.instance.collection(kMessagesCollection);
 
+    final String? email = ModalRoute.of(context)!.settings.arguments
+        as String?; // get email from previous page
+
     final Stream<QuerySnapshot> messageStream = FirebaseFirestore.instance
         .collection(kMessagesCollection)
-        .orderBy(kTimestamp, descending: false)
+        .orderBy(kTimestamp, descending: true)
         .snapshots();
 
     return StreamBuilder<QuerySnapshot>(
@@ -69,14 +72,23 @@ class _ChatViewState extends State<ChatView> {
                 children: [
                   Expanded(
                     child: ListView.builder(
+                        reverse: true,
                         controller: scrollController,
                         itemCount: messageList.length,
                         itemBuilder: (context, index) {
-                          return Align(
-                              alignment: Alignment.centerLeft,
-                              child: ChatBubble(
-                                message: messageList[index],
-                              ));
+                          if (email == messageList[index].id) {
+                            return Align(
+                                alignment: Alignment.centerLeft,
+                                child: ChatBubble(
+                                  message: messageList[index],
+                                ));
+                          } else {
+                            return Align(
+                                alignment: Alignment.centerRight,
+                                child: ChatBubbleSender(
+                                  message: messageList[index],
+                                ));
+                          }
                         }),
                   ),
                   Padding(
@@ -85,9 +97,10 @@ class _ChatViewState extends State<ChatView> {
                       controller: messageController,
                       onSubmitted: (value) {
                         messages.add({
-                          kMessagesCollection: value,
+                          kMessage: value,
                           kTimestamp: FieldValue
-                              .serverTimestamp() // Add timestamp when submitting
+                              .serverTimestamp(), // Add timestamp when submitting
+                          'id': email,
                         });
                         messageController.clear();
                         scrollToBottom();
@@ -102,9 +115,10 @@ class _ChatViewState extends State<ChatView> {
                           suffixIcon: IconButton(
                               onPressed: () {
                                 messages.add({
-                                  kMessagesCollection: messageController.text,
+                                  kMessage: messageController.text,
                                   kTimestamp: FieldValue
-                                      .serverTimestamp() // Add timestamp when sending
+                                      .serverTimestamp(), // Add timestamp when sending
+                                  'id': email,
                                 });
 
                                 messageController.clear();

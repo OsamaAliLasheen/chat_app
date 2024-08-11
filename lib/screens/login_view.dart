@@ -12,6 +12,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
   static String id = 'LoginView';
+  
 
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -87,7 +88,7 @@ class _LoginViewState extends State<LoginView> {
                       setState(() {});
                       try {
                         await loginAuth(email: email!, password: password!);
-                        Navigator.pushNamed(context, ChatView.id);
+                        Navigator.pushNamed(context, ChatView.id, arguments: email);
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'user-not-found') {
                           showSnackBar(

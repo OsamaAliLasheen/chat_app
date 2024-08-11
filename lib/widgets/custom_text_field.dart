@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  CustomTextField({super.key, required this.labelText, this.onchanged, required this.isObscure});
+  CustomTextField(
+      {super.key,
+      required this.labelText,
+      this.onchanged,
+      required this.isObscure});
 
   final String labelText;
   Function(String)? onchanged;
@@ -9,6 +13,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: const TextStyle(color: Colors.white),
       obscureText: isObscure,
       validator: (value) {
         if (value!.isEmpty) {
